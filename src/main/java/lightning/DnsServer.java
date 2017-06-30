@@ -47,71 +47,86 @@ public class DnsServer {
         });	
 	}
 	
-	public void setPort(int port) {
+	public DnsServer setPort(int port) {
 		this.port = port;
+		return this;
 	}
 	
-	public void addForwarding(String address) {
+	public DnsServer addForwarding(String address) {
 		this.addForwarding(address, 53);
+		return this;
 	}
 
-	public void addForwarding(String address, int port) {
+	public DnsServer addForwarding(String address, int port) {
 		this.addForwarding(new InetSocketAddress(address, port));
+		return this;
 	}
 
-	public void addForwarding(InetSocketAddress address) {
+	public DnsServer addForwarding(InetSocketAddress address) {
 		this.forwarding.add(address);
+		return this;
 	}
 	
-	public void setForwarding(String address) {
+	public DnsServer setForwarding(String address) {
 		this.setForwarding(address, 53);
+		return this;
 	}
 
-	public void setForwarding(String address, int port) {
+	public DnsServer setForwarding(String address, int port) {
 		this.setForwarding(new InetSocketAddress(address, port));
+		return this;
 	}
 	
-	public void setForwarding(InetSocketAddress... addresses) {
+	public DnsServer setForwarding(InetSocketAddress... addresses) {
 		this.forwarding = Arrays.asList(addresses);
+		return this;
 	}
 	
-	public void addMapping(String name, InetAddress address) {
+	public DnsServer addMapping(String name, InetAddress address) {
 		this.mappings.put(name, address);
+		return this;
 	}
 	
-	public void addMappings(Map<String, InetAddress> mappings) {
+	public DnsServer addMappings(Map<String, InetAddress> mappings) {
 		this.mappings.putAll(mappings);
+		return this;
 	}
 	
-	public void setMappings(Map<String, InetAddress> mappings) {
+	public DnsServer setMappings(Map<String, InetAddress> mappings) {
 		this.mappings.clear();
 		this.addMappings(mappings);
+		return this;
 	}
 	
-	public void addListener(DnsListener listener) {
+	public DnsServer addListener(DnsListener listener) {
 		this.addListener(InetAddress.getLoopbackAddress(), listener);
+		return this;
 	}
 
-	public void addListener(InetAddress address, DnsListener listener) {
+	public DnsServer addListener(InetAddress address, DnsListener listener) {
 		this.listeners.put(address, listener);
+		return this;
 	}
 	
-	public void removeListener(InetAddress address) {
+	public DnsServer removeListener(InetAddress address) {
 		this.listeners.remove(address);
+		return this;
 	}
 	
 	public DnsListener getListener(InetAddress address) {
 		return this.listeners.get(address);
 	}
 	
-	public void start() throws Exception {
+	public DnsServer start() throws Exception {
 		this.server = this.configuration.bind(this.port).sync();
+		return this;
 	}
 	
-	public void stop() {
+	public DnsServer stop() {
 		this.server.channel().close();
 		this.server.awaitUninterruptibly();
 		this.group.shutdownGracefully();
+		return this;
 	}
 	
 	public boolean running() {
