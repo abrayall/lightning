@@ -33,7 +33,6 @@ public class DnsHandler extends ChannelInboundHandlerAdapter {
     		String name = query.recordAt(DnsSection.QUESTION).name();
     		resolvers.next().resolve(review(query, name), (address) -> {
     			context.writeAndFlush(address == null ? error(query) : response(address, query));	
-    			query.release();
     		});
     	}
     }
