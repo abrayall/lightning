@@ -9,3 +9,12 @@ Lightning is a very fast Java DNS server built on Netty's asynchronous / non-blo
   - Can be embedded into any Java application
   - Allows for custom resolution handlers to be implemented
   
+### Example
+```java
+import lightning.DnServer;
+...
+
+DnsServer dns = new DnsServer().start();
+...
+dns.stop();
+```
